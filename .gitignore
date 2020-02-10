@@ -1,4 +1,5 @@
 .vscode
 .classpath
-.target
+target
+
 classpath
