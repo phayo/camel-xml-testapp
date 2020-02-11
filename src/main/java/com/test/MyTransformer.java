@@ -16,6 +16,8 @@
  */
 package com.test;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.springframework.stereotype.Component;
 
 /**

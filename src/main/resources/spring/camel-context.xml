@@ -7,20 +7,22 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
   <!-- You could also define a traditional camel context here -->
+  <bean class="com.test.Transformer" id="something"/>
   
   <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-  <!-- <restConfiguration apiContextPath="/" bindingMode="json" component="undertow" >
-        <dataFormatProperty key="prettyPrint" value="true"/>
-        <apiProperty key="api.title" value="Stanbic IBTC ISO Balance Enquiry API"/>
-        <apiProperty key="api.version" value="1.0.0"/>
-        <apiProperty key="cors" value="true"/>
-    </restConfiguration>
-    <rest id="itest-rest" tag="Test">
-        <post consumes="application/json" id="test-rest-handler" outType="com.test.TestClass" produces="application/json" type="com.test.TestClass" uri="">
-            <description>Performs an account balance enquiry using ISO 8586 standard</description>
-            <to uri="direct:testRestEndpoint"/>
-        </post>
-    </rest> -->
+  	<restConfiguration bindingMode="json" component="undertow" port="8080"/>
+  	
+  	<rest>
+  		<post uri="/posts" type="com.test.TestClass" outType="com.test.TestClass">
+  			<to uri="direct:testTransform"/>
+  		</post>
+  	</rest>
+  	
+  	<route>
+  		<from uri="direct:testTransform"/>
+  		<bean id="_idroute" method="transform" ref="something"/>
+  	</route>
+  	 
     
     <route id="cbr-route" trace="true">
 
